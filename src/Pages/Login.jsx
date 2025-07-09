@@ -5,15 +5,17 @@ import { motion } from "motion/react";
 import { Slide } from "react-awesome-reveal";
 
 
-// import { AuthContext } from "../provider/AuthProvider";
+
 import Lottie from "lottie-react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { AuthContext } from "../provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  // const { loginWithGoogle, logIn } = use(AuthContext);
+  const { loginWithGoogle, logIn } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
-  // const location = useLocation();
-  // const Navigate = useNavigate();
+  const location = useLocation();
+  const Navigate = useNavigate();
   // console.log(location);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,52 +24,32 @@ const Login = () => {
     const password = form.password.value;
     console.log(email, password);
 
-    // logIn(email, password)
-    //   .then((res) => {
-    //     const user = res.user;
-    //     // alert(`Thank you for joining us ${user.displayName}`);
-    //     Swal.fire({
-    //       position: "top-end",
-    //       icon: "success",
-    //       title: `Thank you for joining us ${user.displayName}`,
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //     // console.log(user);
-    //     Navigate(`${location.state ? location.state : "/"}`);
-    //   })
-    //   .catch((error) => {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: `${error.message}`,
-    //     });
-    //     Navigate("/");
-    //   });
+    logIn(email, password)
+      .then((res) => {
+        const user = res.user;
+        // alert(`Thank you for joining us ${user.displayName}`);
+        toast.success(`Thank you for joining us ${user.displayName}`)
+        // console.log(user);
+        Navigate(`${location.state ? location.state : "/"}`);
+      })
+      .catch((error) => {
+       toast.error(`Login failed: ${error.message}`);
+        Navigate("/");
+      });
   };
   const handleGoogleLogin = () => {
-    // loginWithGoogle()
-    //   .then((res) => {
-    //     // console.log(res.user);
-    //     // alert("Thank you for joining us");
-    //     Swal.fire({
-    //       position: "top-end",
-    //       icon: "success",
-    //       title: `Thank you for joining us !`,
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
+    loginWithGoogle()
+      .then((res) => {
+        // console.log(res.user);
+        // alert("Thank you for joining us");
+       toast.success("Thank you for joining us");
 
-    //     Navigate(`${location.state ? location.state : "/"}`);
-    //   })
-    //   .catch((error) => {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: `${error.message}`,
-    //     });
-    //     Navigate("/");
-    //   });
+        Navigate(`${location.state ? location.state : "/"}`);
+      })
+      .catch((error) => {
+       toast.error(`Login failed: ${error.message}`);
+        Navigate("/");
+      });
   };
   return (
     <Slide direction="right">
