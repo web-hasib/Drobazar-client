@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import hero from '../../public/hero.png'
-import hero2 from '../../public/hero2.png'
-import hero3 from '../../public/hero3.png'
+import hero from '../assets/hero/hero.png'
+import hero2 from '../assets/hero/hero2.png'
+import hero3 from '../assets/hero/hero3.png'
 
 const Hero = () => {
     // Text for the typewriter effect

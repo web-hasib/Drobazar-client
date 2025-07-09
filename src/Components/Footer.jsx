@@ -1,5 +1,5 @@
 import React from 'react';
-import footer from '../../public/lottie/footer.json'
+import footer from '../assets/lottie/footer.json'
 import Lottie from 'lottie-react';
 import { FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaPhoneAlt, FaTwitter } from 'react-icons/fa';
 import { NavLink } from 'react-router';
