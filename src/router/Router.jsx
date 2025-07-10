@@ -3,6 +3,8 @@ import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import AddProduct from "../Pages/VendorsPage/AddProduct";
+import PrivateRoute from "../Routes/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +26,11 @@ export const router = createBrowserRouter([
             {
                 path:'register',
                 Component:Register
+            }
+        ,
+            {
+                path:'add-product',
+                element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
             }
         ]
     }

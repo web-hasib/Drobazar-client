@@ -1,30 +1,24 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Changed from "react-router" to "react-router-dom"
-import { motion } from "framer-motion"; // Changed from "motion/react" to "framer-motion" for motion.h1
+import { Link, useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import { Slide } from "react-awesome-reveal";
-import register from "../assets/lottie/register.json"; // Importing Lottie animation
+import register from "../assets/lottie/register.json";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { toast } from 'react-toastify'; // Import for toast messages
-import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
-
-// Assuming AuthContext provides Firebase auth methods
-import { AuthContext } from "../provider/AuthProvider"; // Uncommented AuthContext
-import { imageUpload } from "../api/utils"; // Your image upload utility
+import { toast } from "react-toastify";
+import { AuthContext } from "../provider/AuthProvider";
+import { imageUpload, saveUserToDB } from "../api/utils";
 
 const Register = () => {
-  // Use useContext to access AuthContext values
-  const { createUser, updateUserProfile, loginWithGoogle } = useContext(AuthContext);
+  const { createUser, updateUser, setUser, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
-  // console.log(loginWithGoogle);
 
   const [nameError, setNameError] = useState('');
   const [passError, setPassError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null); // State to store uploaded image URL
-  const [loading, setLoading] = useState(false); // State for loading indicator
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Handle image file selection and upload
+  // Handle image upload
   const handleImageUpload = async (e) => {
     const image = e.target.files[0];
     if (image) {
@@ -32,59 +26,41 @@ const Register = () => {
       try {
         const imageUrl = await imageUpload(image);
         setUploadedImage(imageUrl);
-        // toast.success("Image uploaded successfully!");
       } catch (error) {
-        console.error("Error uploading image:", error);
-        toast.error("Failed to upload image. Please try again.");
-        setUploadedImage(null); // Clear image on error
+        console.error("Image upload failed:", error);
+        toast.error("Image upload failed. Try again.");
       } finally {
         setLoading(false);
       }
     }
   };
 
-  // Handle user registration with email and password
+  // Handle registration
   const handleRegister = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
 
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
 
-    // Name validation
     if (name.length < 5) {
-      setNameError('Name should be more than 5 characters');
+      setNameError("Name should be at least 5 characters.");
       setLoading(false);
       return;
     } else {
       setNameError('');
     }
-    // Password validation
-    if (password.length < 6) {
-      setPassError("Password must be at least 6 characters long");
-      setLoading(false);
-      return;
-    }
-    if (!/[a-z]/.test(password)) {
-      setPassError("Password must contain at least one lowercase letter");
-      setLoading(false);
-      return;
-    }
-    if (!/[A-Z]/.test(password)) {
-      setPassError("Password must contain at least one uppercase letter");
-      setLoading(false);
-      return;
-    }
-    if (!/\d/.test(password)) {
-      setPassError("Password must contain at least one number");
-      setLoading(false);
-      return;
-    }
-    setPassError(''); // Clear password error if all checks pass
 
-    // Ensure an image is uploaded
+    if (password.length < 6 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) {
+      setPassError("Password must be 6+ chars, with uppercase, lowercase, and number.");
+      setLoading(false);
+      return;
+    } else {
+      setPassError('');
+    }
+
     if (!uploadedImage) {
       toast.error("Please upload a profile image.");
       setLoading(false);
@@ -92,104 +68,93 @@ const Register = () => {
     }
 
     try {
-      // 1. Create user with email and password
       const result = await createUser(email, password);
       const user = result.user;
 
-      // // 2. Update user profile with name and photo URL
-      // const updated = await updateUserProfile(user, { displayName: name, photoURL: uploadedImage });
-      // console.log('updated user:', updated);
+      await updateUser({ displayName: name, photoURL: uploadedImage });
 
+      const updatedUser = {
+        ...user,
+        displayName: name,
+        photoURL: uploadedImage,
+      };
 
-      toast.success(`Thanks for joining us, ${name}! Registration successful.`);
-      navigate('/'); // Navigate to home page
+      setUser(updatedUser);
+      await saveUserToDB(updatedUser);
 
+      toast.success(`Welcome, ${name}! Registration successful.`);
+      navigate('/');
     } catch (error) {
       console.error("Registration error:", error);
       toast.error(`Registration failed: ${error.message}`);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   // Handle Google login
   const handleGoogleLogin = async () => {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
-      await loginWithGoogle();
-      toast.success("Successfully logged in with Google!");
-      navigate('/'); // Navigate to home page after successful login
+      const res = await loginWithGoogle();
+      const user = res.user;
+      await saveUserToDB(user);
+      toast.success("Logged in with Google!");
+      navigate('/');
     } catch (error) {
       console.error("Google login error:", error);
       toast.error(`Google login failed: ${error.message}`);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   return (
     <Slide direction="right">
-       {/* Toast messages will appear here */}
       <div className="py-20 flex flex-col items-center justify-center md:flex-row-reverse md:gap-4">
         <div>
           <Lottie style={{ height: '200px' }} animationData={register} loop={true} />
         </div>
 
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-sm border border-base-content/20 hover:shadow-md">
-          <motion.h1
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1, transition: { duration: 0.4 } }} // Adjusted duration for smoother animation
-            className="pt-5 text-2xl text-center font-bold"
-          >
-            <motion.span
-              animate={{
-                color: ['#ff5733', '#33ff33', '#8a33ff'],
-                transition: { duration: 1, repeat: Infinity }
-              }}
-            >
-              Register your Account
-            </motion.span>
-          </motion.h1>
+          <h1 className="text-2xl pt-6 font-bold text-center text-green-500/70 hover:text-green-600 transition-all duration-300">
+            Register your Account
+          </h1>
 
           <form onSubmit={handleRegister} className="card-body">
             <fieldset className="fieldset">
+              {/* Name */}
               <label className="label">Name</label>
-              <input
-                name="name"
-                type="text"
-                className="input"
-                placeholder="Your Name"
-                required
-              />
+              <input name="name" type="text" className="input" placeholder="Your Name" required />
               {nameError && <p className="text-xs text-red-500">{nameError}</p>}
 
-              {/* Image Upload Section */}
-              <div className='p-4 w-full m-auto rounded-lg flex-grow'>
-                <div className='file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg'>
-                  <div className='flex items-center gap-5 w-max mx-auto text-center'>
-                    <label htmlFor="image"> {/* Added htmlFor for accessibility */}
+              {/* Image Upload */}
+              <div className="p-4 pl-1 w-full m-auto rounded-lg flex-grow">
+                <div className="file_upload px-5 py-2 border-2 border-dotted border-gray-300 rounded-lg">
+                  <div className="flex items-center gap-5 w-max mx-auto">
+                    <label htmlFor="image">
                       <input
                         onChange={handleImageUpload}
-                        className='text-sm cursor-pointer w-36 hidden'
-                        type='file'
-                        name='image'
-                        id='image'
-                        accept='image/*'
-                        hidden
+                        className="hidden"
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/*"
                       />
-                      <div className='bg-lime-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500'>
-                        {loading ? 'Uploading...' : 'Upload Image'} {/* Loading state for image upload */}
+                      <div className="bg-lime-500 text-white border rounded font-semibold px-3 py-1 cursor-pointer hover:bg-lime-600">
+                        {loading ? "Uploading..." : "Upload Image"}
                       </div>
                     </label>
                     {uploadedImage && (
-                      <div className='w-full'>
-                        <img
-                          className='w-[100px] h-[100px] object-cover rounded-full' // Added styling for image preview
-                          src={uploadedImage}
-                          alt='Profile'
-                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x100/CCCCCC/FFFFFF?text=Image+Error'; }} // Fallback for broken image
-                        />
-                      </div>
+                      <img
+                        className="w-[100px] h-[100px] object-cover rounded-full"
+                        src={uploadedImage}
+                        alt="Profile"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://placehold.co/100x100?text=Image';
+                        }}
+                      />
                     )}
                   </div>
                 </div>
@@ -197,13 +162,8 @@ const Register = () => {
 
               {/* Email */}
               <label className="label">Email</label>
-              <input
-                name="email"
-                type="email"
-                className="input"
-                placeholder="Email"
-                required
-              />
+              <input name="email" type="email" className="input" placeholder="Email" required />
+
               {/* Password */}
               <label className="label">Password</label>
               <div className="relative">
@@ -215,22 +175,21 @@ const Register = () => {
                   required
                 />
                 <button
-                  type="button" // Important: change to type="button" to prevent form submission
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none z-10 mr-5"
+                  type="button"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 z-10 mr-5"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                 </button>
               </div>
               {passError && <p className="text-xs text-red-500">{passError}</p>}
-              <div>
-                <a className="link link-hover">Forgot password?</a>
-              </div>
+
+              <div><a className="link link-hover">Forgot password?</a></div>
 
               <button
                 type="submit"
-                className="btn btn-soft border-blue-300 rounded-md px-7 hover:text-white btn-info mt-4"
-                disabled={loading} // Disable button when loading
+                className="btn btn-success mt-4 border-green-300 rounded-md px-7 hover:text-white"
+                disabled={loading}
               >
                 {loading ? 'Registering...' : 'Register'}
               </button>
@@ -240,8 +199,8 @@ const Register = () => {
           <div className="flex items-center justify-center">
             <button
               onClick={handleGoogleLogin}
-              className="border border-[#e5eaf2] rounded-md py-2 px-4 flex items-center gap-[20px] text-[1rem] text-[#9c8b8b] hover:bg-gray-50 transition-all duration-200 w-[calc(100%-40px)] font-bold justify-center"
-              disabled={loading} // Disable button when loading
+              className="border border-[#e5eaf2] rounded-md py-2 px-4 flex items-center gap-4 text-[1rem] text-[#9c8b8b] hover:bg-gray-50 transition-all duration-200 w-[calc(100%-40px)] font-bold justify-center"
+              disabled={loading}
             >
               <img
                 src="https://i.ibb.co/dQMmB8h/download-4-removebg-preview-1.png"
@@ -251,8 +210,9 @@ const Register = () => {
               Sign in with Google
             </button>
           </div>
+
           <p className="py-3 pb-5 text-sm font-semibold text-accent text-center">
-            Already have an account ?{" "}
+            Already have an account?{" "}
             <Link to="/login" className="text-blue-500 underline">
               Login
             </Link>

@@ -14,11 +14,18 @@ export const imageUpload = async imageData => {
 }
 
 // save or update user in db
-export const saveUserInDb = async user => {
-  const { data } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/user`,
-    user
-  )
+export const saveUserToDB = async (user) => {
+  const { displayName, email, photoURL } = user;
 
-  console.log(data)
-}
+  try {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
+      name: displayName,
+      email,
+      imageURL: photoURL,
+      creationTime:  new Date().toISOString(),
+    });
+    return res.data;
+  } catch (error) {
+    console.error('Error saving user:', error);
+  }
+};
