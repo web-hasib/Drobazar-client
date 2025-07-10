@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
   } = product || {};
 
   return (
-    <Card className="relative w-96 bg-green-100/30 overflow-hidden hover:text-base-100 group rounded-lg shadow-md">
+    <Card className="relative w-full bg-green-100/30 overflow-hidden hover:text-base-100 group rounded-lg shadow-md">
       {/* Static Image */}
       <div className="h-60">
         <img
@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
               {itemName}
             </Typography>
             <Typography color="blue-gray" className="font-medium">
-              ৳{price?.price}
+              ৳{price?.price} {price?.unit}
             </Typography>
           </div>
           <Typography
@@ -51,7 +51,7 @@ const ProductCard = ({ product }) => {
             color="gray"
             className="font-normal opacity-65 mt-1"
           >
-            {price?.unit} · {marketName}
+             Market: {marketName}
           </Typography>
         </CardBody>
 

@@ -75,6 +75,7 @@ const AddProduct = () => {
     email: currentUser.email,
     photo: currentUser.photoURL || null,
   },
+  reviews: [],
 };
     console.log(productData);
     try {

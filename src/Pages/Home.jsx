@@ -9,7 +9,7 @@ const Home = () => {
             <Hero></Hero>
             <section className='max-w-7xl mx-auto px-2 md:px-4'>
             <TopProduct></TopProduct>
-           <ProductCard></ProductCard>
+           {/* <ProductCard></ProductCard> */}
             </section>
 
         </div>
