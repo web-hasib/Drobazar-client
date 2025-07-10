@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { Link } from "react-router";
 
 const ProductCard = ({ product }) => {
   const {
@@ -15,7 +16,8 @@ const ProductCard = ({ product }) => {
   } = product || {};
 
   return (
-    <Card className="relative w-full bg-green-100/30 overflow-hidden hover:text-base-100 group rounded-lg shadow-md">
+    <Link className="w-full hover:scale-105 transition duration-300 ease-in-out " to={`/product/${product._id}`}>
+    <Card className="relative bg-green-100/30 overflow-hidden hover:text-lime-500/70 group rounded-2xl shadow-md">
       {/* Static Image */}
       <div className="h-60">
         <img
@@ -30,7 +32,7 @@ const ProductCard = ({ product }) => {
         <img
           src={image}
           alt="Blurred"
-          className="h-full w-full object-cover scale-110 blur-sm"
+          className="h-full w-full object-cover scale-110 blur-[0px]"
         />
         <div className="absolute inset-0 bg-white/5 backdrop-blur-sm" />
       </div>
@@ -66,6 +68,7 @@ const ProductCard = ({ product }) => {
         </CardFooter>
       </div>
     </Card>
+    </Link>
   );
 };
 

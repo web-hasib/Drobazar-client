@@ -8,6 +8,8 @@ import { LuSunMoon } from "react-icons/lu";
 import { ThemeContext } from "../Theme/ThemeProvider";
 import Logo from "./shared/Logo";
 import { AuthContext } from "../provider/AuthProvider";
+import ThemeButton from "./shared/Buttons/ThemeButton";
+import AuthButton from "./shared/Buttons/AuthButton";
 
 {
   /* <img src="https://i.ibb.co/jvscyq8R/2-removebg-preview.png" alt="" /> */
@@ -70,13 +72,12 @@ const Navbar = () => {
         <div className="hidden lg:flex navbar-end items-center gap-2">
           
           {/* Theme Button */}
-          <button onClick={toggleTheme} className="btn rounded-full">
-            {theme === "light" ? (
+         
+          <ThemeButton onClick={toggleTheme} label={theme === "light" ? (
               <LuSunMoon size={20} color="black" />
             ) : (
               <CiLight size={20} color="white" />
-            )}
-          </button>
+            )}></ThemeButton>
           {user?.photoURL && (
             <Link to="/profile" className="relative group inline-block">
               <img
@@ -91,18 +92,21 @@ const Navbar = () => {
           )}
 
           {user ? (
-          <button
+          <AuthButton
             onClick={handleLogOut}
-            className="btn btn-soft border-blue-300 rounded-2xl px-7 hover:text-white btn-info"
+           lable="Logout"
           >
-            LogOut
-          </button>
+            
+          </AuthButton>
           ) : (
           <Link
             to="/login"
-            className="btn btn-soft border-blue-300 rounded-2xl px-7 hover:text-white btn-info"
+            
           >
-            Login
+            <AuthButton
+           
+           lable="Login"
+          />
           </Link>
           )} 
         </div>
@@ -152,21 +156,24 @@ const Navbar = () => {
           </button>
             </div>
             {links}
-            {user ? (
-            <button
-              onClick={handleLogOut}
-              className="btn btn-soft border-blue-300 rounded-2xl px-7 hover:text-white btn-info"
-            >
-              LogOut
-            </button>
-             ) : ( 
-            <Link
-              to="/login"
-              className="btn btn-soft border-blue-300 rounded-2xl px-7 hover:text-white btn-info"
-            >
-              Login
-            </Link>
-            )} 
+             {user ? (
+          <AuthButton
+            onClick={handleLogOut}
+           lable="Logout"
+          >
+            
+          </AuthButton>
+          ) : (
+          <Link
+            to="/login"
+            
+          >
+            <AuthButton
+           
+           lable="Login"
+          />
+          </Link>
+          )} 
           </ul>
         </div>
       </div>

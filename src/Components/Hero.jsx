@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import hero from '../assets/hero/hero.png'
 import hero2 from '../assets/hero/hero2.png'
 import hero3 from '../assets/hero/hero3.png'
+// import { FiSend } from 'react-icons/fi';
+// import AuthButton from './shared/Buttons/AuthButton';
 
 const Hero = () => {
     // Text for the typewriter effect
@@ -98,6 +100,8 @@ const Hero = () => {
                     >
                         Explore Products
                     </motion.button>
+                     
+   {/* <AuthButton></AuthButton> */}
                    
                 </motion.div>
 

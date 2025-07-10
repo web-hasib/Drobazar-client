@@ -5,6 +5,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import AddProduct from "../Pages/VendorsPage/AddProduct";
 import PrivateRoute from "../Routes/PrivateRoute";
+import Error from "../Pages/Error";
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
                 element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
             }
         ]
+    },
+    {
+        path: '*',
+        Component: Error
     }
 
 ])
