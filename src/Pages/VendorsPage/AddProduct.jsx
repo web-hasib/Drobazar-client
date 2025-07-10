@@ -69,7 +69,7 @@ const AddProduct = () => {
   },
   marketDescription: data.marketDescription,
   image: imageUrl,
-  status: 'pending',
+  status: 'approved',
   vendor: {
     name: currentUser.displayName || 'Anonymous',
     email: currentUser.email,

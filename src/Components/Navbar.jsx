@@ -37,14 +37,14 @@ const Navbar = () => {
         {" "}
         Home
       </NavLink>
-      <NavLink className="hover:text-black hover:font-bold" to="/allRecipes">
+      {/* <NavLink className="hover:text-black hover:font-bold" to="/allRecipes">
         {" "}
         All Recipes
-      </NavLink>
+      </NavLink> */}
 
       <NavLink
         className="hover:text-black hover:font-bold"
-        to="/dashboard/stat"
+        to="/dashboard"
       >
         {" "}
         Dashboard
@@ -67,7 +67,7 @@ const Navbar = () => {
           <Logo/>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+          <ul className="menu menu-horizontal px-1 gap-3">{links}</ul>
         </div>
         <div className="hidden lg:flex navbar-end items-center gap-2">
           
@@ -131,7 +131,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 gap-2 w-52 p-2 shadow"
           >
             <div className="flex items-center justify-between mb-4">
               {user?.photoURL && (
