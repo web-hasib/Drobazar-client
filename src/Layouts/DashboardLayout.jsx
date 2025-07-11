@@ -172,6 +172,12 @@ const DashboardLayout = () => {
               add Product
             </NavLink>
           </li>
+          <li>
+  <NavLink to="/dashboard/my-payments">
+    <FaMoneyCheckAlt className="inline-block mr-2" />
+    My Payments
+  </NavLink>
+</li>
         </ul>
       </div>
     </div>

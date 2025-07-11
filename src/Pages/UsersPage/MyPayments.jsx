@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { AuthContext } from '../../provider/AuthProvider'
 import { FaCheckCircle } from 'react-icons/fa'
+import Loading from '../Loading'
 
 const MyPayments = () => {
   const { user } = useContext(AuthContext)
@@ -16,17 +17,17 @@ const MyPayments = () => {
     },
   })
 
-  if (isLoading) return <p className="text-center mt-10">Loading...</p>
+  if (isLoading) return <Loading/>
 
   return (
-    <div className="p-4 md:p-8">
-      <h2 className="text-2xl font-bold mb-6">My Payments</h2>
+    <div className="p-4 max-w-7xl mx-auto">
+      <h2 className="text-2xl text-lime-400 font-bold mb-6 text-center pb-5">My Payments</h2>
       {myPayments.length === 0 ? (
         <p className="text-gray-500">You have no payment history yet.</p>
       ) : (
         <div className="overflow-x-auto rounded shadow-md">
-          <table className="table w-full border">
-            <thead className="bg-gray-200 text-gray-700">
+          <table className="table w-full">
+            <thead className="bg-base-300 text-base-content">
               <tr>
                 <th>#</th>
                 <th>Item</th>
