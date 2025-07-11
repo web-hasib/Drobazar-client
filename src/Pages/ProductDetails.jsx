@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import Loading from './Loading';
 
 import { AuthContext } from '../provider/AuthProvider';
+import PurchaseModal from '../Components/Modals/PurchaseModal';
 
 
 const ProductDetails = () => {
@@ -15,7 +16,7 @@ const ProductDetails = () => {
   const { user } = use(AuthContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [isOpen, setIsOpen] = useState(false)
   const [rating, setRating] = useState(0);
   const { register, handleSubmit, reset } = useForm();
 
@@ -64,6 +65,9 @@ console.log(review);
       console.error("Review error:", err);
     }
   };
+    const closeModal = () => {
+    setIsOpen(false)
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 text-base-content">
@@ -77,7 +81,12 @@ console.log(review);
             <p className="text-xl font-semibold mt-2">৳ {price?.price} <span className="text-sm text-gray-500">{price?.unit}</span></p>
             <p className="text-sm text-gray-500">🗓 {format(new Date(date), 'PPP')}</p>
             <p className="mt-2 text-sm">{description}</p>
-           
+               {/* Purchase button           */}
+           <button disabled={
+                  user?.email === vendor?.email 
+                } 
+                // || role !== 'user'
+                onClick={() => setIsOpen(true)} className='btn btn-primary'>purchase </button>
           </div>
         </div>
 
@@ -188,7 +197,13 @@ console.log(review);
       </div>
 
       {/* Payment Modal */}
-
+          <PurchaseModal
+            product={product}
+            closeModal={closeModal}
+            isOpen={isOpen}
+            price={price?.price}
+           
+          />
     </div>
   );
 };
