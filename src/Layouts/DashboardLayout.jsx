@@ -166,6 +166,12 @@ const DashboardLayout = () => {
               Update Profile
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/add-product">
+              <FaUserEdit className="inline-block mr-2" />
+              add Product
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>

@@ -98,7 +98,7 @@ const fadeIn = {
 };
   return (
    <motion.div
-  className='w-full py-10 px-2 md:px-4 lg:px-6 text-base-content flex justify-center items-start'
+  className='max-w-7xl mx-auto py-10 px-2 md:px-4 lg:px-6 text-base-content flex justify-center items-start'
   initial='hidden'
   animate='visible'
   variants={fadeIn}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 import Loading from './Loading';
+import { FaStar } from 'react-icons/fa';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -25,10 +26,11 @@ const ProductDetails = () => {
   if (!product) return <p className="text-center py-20 text-red-500">Product not found</p>;
 
   const { itemName, image, price, description, marketName, marketDescription, vendor, category, date, reviews = [] } = product;
+  console.log(reviews);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 text-gray-800">
-      <div className="bg-white rounded-lg shadow p-6 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 py-10 text-base-content">
+      <div className="bg-base-200/20 rounded-lg shadow lg:p-2 space-y-6">
         {/* Image & Header */}
         <div className="flex flex-col lg:flex-row gap-6">
           <img src={image} alt={itemName} className="w-full lg:w-1/2 rounded-md object-cover max-h-96" />
@@ -61,22 +63,52 @@ const ProductDetails = () => {
         </div>
 
         {/* Reviews */}
-        <div>
-          <h3 className="text-lg font-bold mt-6 mb-2">Reviews ({reviews.length})</h3>
-          {reviews.length === 0 ? (
-            <p className="text-sm text-gray-500">No reviews yet.</p>
-          ) : (
-            <ul className="space-y-4">
-              {reviews.map((review, index) => (
-                <li key={index} className="border-t pt-2">
-                  <p className="font-medium">{review.email}</p>
-                  <p className="text-sm text-gray-700">{review.message}</p>
-                  <p className="text-xs text-gray-400">⭐ {review.ratings}/5 — {format(new Date(review.time), 'PPP')}</p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        
+          <div className="mt-10">
+      <h3 className="text-xl font-bold text-base-content mb-4">
+        Reviews ({reviews.length})
+      </h3>
+
+      {reviews.length === 0 ? (
+        <p className="text-sm text-base-content/60">No reviews yet.</p>
+      ) : (
+        <ul className="space-y-4">
+          {reviews.map((review, index) => (
+            <li
+              key={index}
+              className="bg-base-200 p-4 rounded-lg border border-base-300 shadow-sm hover:shadow-md transition-all"
+            >
+              <div className='flex flex-col md:flex-row mb-3 justify-between'>
+
+              <div className="flex items-center gap-3 mb-2">
+                {/* Avatar fallback to initials or default */}
+                <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow">
+                  {review.email?.slice(0, 1).toUpperCase()}
+                </div>
+                <div>
+                  <p className="font-semibold text-base-content">{review.email}</p>
+                  <p className="text-xs text-base-content/50">
+                    {format(new Date(review.time), 'PPP')}
+                  </p>
+                </div>
+              </div>
+
+              {/* Rating stars */}
+              <div className="flex gap-1 text-yellow-400 text-sm mb-7">
+                {[...Array(5)].map((_, i) => (
+                  <FaStar key={i} className={i < review.rating ? 'fill-yellow-400' : 'text-base-content/30'} />
+                ))}
+               
+              </div>
+              </div>
+
+              {/* Message */}
+              <p className="text-sm text-base-content/50">{review.message}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
       </div>
     </div>
   );

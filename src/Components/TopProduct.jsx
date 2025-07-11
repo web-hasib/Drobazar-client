@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './cards/ProductCard';
 import Loading from '../Pages/Loading';
+import AuthButton from './shared/Buttons/AuthButton';
+import { Link } from 'react-router';
 
 
 const TopProduct = () => {
@@ -39,6 +41,11 @@ const TopProduct = () => {
           {products.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
+          <div className="col-span-full text-center mt-6">
+            <Link to="/all-items" >
+          <AuthButton lable='All Products'></AuthButton>
+           </Link>
+           </div>
         </div>
       )}
     </div>

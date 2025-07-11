@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SIngleProductCard from '../Components/cards/SIngleProductCard';
 import Loading from './Loading';
+import Pagination from '../Components/shared/Pagination';
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -53,23 +54,26 @@ const AllProducts = () => {
         <h1 className="text-3xl font-bold mb-6 text-lime-600 text-center">All Products</h1>
 
         {/* Filters */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
-          {/* Search Bar */}
-          <form onSubmit={handleSearchSubmit} className="flex w-full md:w-auto">
+        <div className="flex flex-col gap-4 mb-10">
+        <div className='mx-auto md:w-2/5'>
+            {/* Search Bar */}
+          <form onSubmit={handleSearchSubmit} className="flex w-full  mx-auto">
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="px-4 py-2 border border-gray-300 rounded-l-md focus:outline-lime-500"
+              className="w-full px-4 py-2 border border-dashed border-lime-100 rounded-lg focus:outline-lime-300"
             />
-            <button
+            {/* <button
               type="submit"
               className="bg-lime-500 text-white px-4 py-2 rounded-r-md hover:bg-lime-600"
             >
               Search
-            </button>
+            </button> */}
           </form>
+        </div>
+          <div className='flex flex-col sm:flex-row justify-between items-center gap-4'>
 
           {/* Category Filter */}
           <select
@@ -100,6 +104,8 @@ const AllProducts = () => {
             <option value="asc">Low → High</option>
             <option value="desc">High → Low</option>
           </select>
+          </div>
+
         </div>
 
         {/* Products Grid */}
@@ -118,7 +124,8 @@ const AllProducts = () => {
         )}
 
         {/* Pagination */}
-        <div className="flex justify-center items-center gap-4 mt-10">
+        <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+        {/* <div className="flex justify-center items-center gap-4 mt-10">
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
@@ -138,7 +145,7 @@ const AllProducts = () => {
           >
             Next
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

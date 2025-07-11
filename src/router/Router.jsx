@@ -37,10 +37,7 @@ export const router = createBrowserRouter([
                 element:<PrivateRoute><Profile/></PrivateRoute>
             }
         ,
-            {
-                path:'add-product',
-                element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
-            },
+           
             {
                 path:'product/:id',
                 element:<PrivateRoute><ProductDetails/></PrivateRoute>
@@ -55,7 +52,10 @@ export const router = createBrowserRouter([
             {
                 index:true,
                 element:<DashboardHome></DashboardHome>
-            }
+            } ,{
+                path:'add-product',
+                element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
+            },
         ]
     },
     {
