@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link className="w-full hover:scale-105 transition duration-300 ease-in-out " to={`/product/${product._id}`}>
-    <Card className="relative bg-green-100/30 overflow-hidden hover:text-lime-500/70 group rounded-2xl shadow-md">
+    <Card className="relative bg-base-content/10 overflow-hidden group  rounded-2xl shadow-md text-base-content hover:text-black">
       {/* Static Image */}
       <div className="h-60">
         <img
@@ -34,11 +34,11 @@ const ProductCard = ({ product }) => {
           alt="Blurred"
           className="h-full w-full object-cover scale-110 blur-[0px]"
         />
-        <div className="absolute inset-0 bg-white/5 backdrop-blur-sm" />
+        <div className="absolute inset-0 backdrop-blur-sm" />
       </div>
 
       {/* Card Content */}
-      <div className="relative z-10 p-4 hover:bg-green-100/30 hover:text-white">
+      <div className="relative z-10 p-4 hover:bg-base-content/50 hover:text-base-100">
         <CardBody className="p-0 mb-2">
           <div className="flex items-center justify-between">
             <Typography color="blue-gray" className="text-lg font-semibold">
@@ -50,22 +50,14 @@ const ProductCard = ({ product }) => {
           </div>
           <Typography
             variant="small"
-            color="gray"
+           
             className="font-normal opacity-65 mt-1"
           >
              Market: {marketName}
           </Typography>
         </CardBody>
 
-        <CardFooter className="pt-4 px-0">
-          <Button
-            ripple={false}
-            fullWidth
-            className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105"
-          >
-            Details
-          </Button>
-        </CardFooter>
+        
       </div>
     </Card>
     </Link>

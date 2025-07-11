@@ -37,10 +37,10 @@ const Navbar = () => {
         {" "}
         Home
       </NavLink>
-      {/* <NavLink className="hover:text-black hover:font-bold" to="/allRecipes">
+      <NavLink className="hover:text-black hover:font-bold" to="/all-items">
         {" "}
-        All Recipes
-      </NavLink> */}
+        All Products
+      </NavLink>
 
       <NavLink
         className="hover:text-black hover:font-bold"

@@ -9,6 +9,8 @@ import Error from "../Pages/Error";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import Profile from "../Pages/Profile";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import AllProducts from "../Pages/AllProducts";
+import ProductDetails from "../Pages/ProductDetails";
 
 export const router = createBrowserRouter([
     {
@@ -21,7 +23,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'all-items',
-                element: <h2>All items</h2>
+                element: <AllProducts></AllProducts>
             },
             {
                 path: 'login',
@@ -38,6 +40,11 @@ export const router = createBrowserRouter([
             {
                 path:'add-product',
                 element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
+            },
+            {
+                path:'product/:id',
+                element:<PrivateRoute><ProductDetails/></PrivateRoute>
+        
             }
         ]
     },
