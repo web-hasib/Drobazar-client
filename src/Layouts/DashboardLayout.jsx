@@ -80,9 +80,9 @@ const DashboardLayout = () => {
           </div>
         </div>
         {/* Page content here */}
-        <div>
+        <div className="">
             {/* start  */}
-             <div className="navbar hidden lg:visible bg-base-200/40 w-full lg:flex">
+             <div className="navbar hidden  lg:visible bg-base-200/40 w-full lg:flex">
           <div className="mx-2 flex-1 px-2  items-center justify-between lg:flex">
            {/* links  */}
            <ul className="menu menu-horizontal px-1 gap-3">

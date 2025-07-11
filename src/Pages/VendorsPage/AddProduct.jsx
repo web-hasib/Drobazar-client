@@ -147,7 +147,7 @@ const fadeIn = {
   </label>
   <select
     {...register('category', { required: true })}
-    className='w-full px-4 py-3 border focus:outline-lime-500 rounded-md shadow-sm'
+    className='w-full bg-base-100 px-4 py-3 border focus:outline-lime-500 rounded-md shadow-sm'
   >
     <option value='vegetable'>Vegetable</option>
     <option value='fruits'>Fruits</option>
@@ -193,7 +193,7 @@ const fadeIn = {
             </label>
             <select
               {...register('unit', { required: true })}
-              className='w-full px-4 py-3 border focus:outline-lime-500 rounded-md shadow-sm'
+              className='w-full px-4 py-3 border bg-base-100 focus:outline-lime-500 rounded-md shadow-sm'
             >
               <option value='/kg'>/kg</option>
               <option value='/pcs'>/pcs</option>

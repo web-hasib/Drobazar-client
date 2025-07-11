@@ -63,7 +63,7 @@ const AllProducts = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="w-full px-4 py-2 border border-dashed border-lime-100 rounded-lg focus:outline-lime-300"
+              className="w-full px-4 py-2 border border-dashed border-lime-400/50 rounded-lg focus:outline-lime-300"
             />
             {/* <button
               type="submit"
@@ -82,7 +82,7 @@ const AllProducts = () => {
               setCategory(e.target.value);
               setPage(1);
             }}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-lime-500"
+            className="px-4 py-2 border border-lime-400/50 rounded-md focus:outline-lime-500 text-base-content bg-base-200"
           >
             <option value="all">All Categories</option>
             <option value="fruit">Fruit</option>
@@ -98,7 +98,7 @@ const AllProducts = () => {
               setSort(e.target.value);
               setPage(1);
             }}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-lime-500"
+            className="px-4 py-2 border border-lime-400/50 rounded-md focus:outline-lime-500 text-base-content bg-base-200"
           >
             <option value="">Sort by Price</option>
             <option value="asc">Low → High</option>
