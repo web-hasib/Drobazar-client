@@ -10,6 +10,7 @@ import Loading from "./Loading";
 import { AuthContext } from "../provider/AuthProvider";
 import PurchaseModal from "../Components/Modals/PurchaseModal";
 import PayButton from "../Components/shared/Buttons/PayButton";
+import PriceComparisonChart from "../Components/PriceComparisonChart";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -150,18 +151,18 @@ const ProductDetails = () => {
             </p>
             <p className="mt-2 text-sm">{description}</p>
 
-            <button
+            <span
               disabled={isVendor}
               onClick={() => setIsOpen(true)}
-              className="btn btn-primary w-full"
+              className=""
             >
               <PayButton text="Order Now" />
-            </button>
+            </span>
 
             <button
               onClick={handleAddToCart}
               disabled={isVendor}
-              className="btn btn-outline btn-secondary w-full mt-3"
+              className="btn btn-outline btn-secondary px-8 -ml-1 mt-3"
             >
               Add to Cart
             </button>
@@ -194,7 +195,8 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-
+{/* rechart section  */}
+<PriceComparisonChart priceData={product?.price} />
         {/* Reviews */}
         <div className="mt-10">
           <h3 className="text-xl font-bold text-base-content mb-4">
