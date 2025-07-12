@@ -16,6 +16,9 @@ import MyCarts from "../Pages/UsersPage/MyCart";
 import ManageUsers from "../Pages/AdminsPage/ManageUsers";
 import MyProducts from "../Pages/VendorsPage/MyProducts";
 import AllProductsAdmin from "../Pages/AdminsPage/AllProductsAdmin";
+import EditProduct from "../Pages/VendorsPage/EditProduct";
+import BeVendor from "../Pages/UsersPage/BeVendor";
+import VendorRequests from "../Pages/AdminsPage/VendorRequests";
 
 export const router = createBrowserRouter([
     {
@@ -57,9 +60,19 @@ export const router = createBrowserRouter([
             {
                 index:true,
                 element:<DashboardHome></DashboardHome>
-            } ,{
+            },
+            {
+                path:'be-vendor',
+                element:<PrivateRoute><BeVendor/></PrivateRoute>
+            } 
+            ,
+            {
                 path:'add-product',
                 element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
+            },
+            {
+                path:'edit-product/:id',
+                element:<PrivateRoute><EditProduct/></PrivateRoute>
             },
             {
                 path:'my-payments',
@@ -72,6 +85,10 @@ export const router = createBrowserRouter([
             {
                 path:'manage-users',
                 element:<PrivateRoute><ManageUsers/></PrivateRoute>
+            },
+            {
+                path:'vendor-requests',
+                element:<PrivateRoute><VendorRequests/></PrivateRoute>
             },
             {
                 path: 'all-products-admin',

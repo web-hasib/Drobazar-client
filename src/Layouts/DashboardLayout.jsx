@@ -8,6 +8,7 @@ import {
   FaSearchLocation,
   FaShoppingCart,
   FaUsers,
+  FaRegFileAlt,
 } from "react-icons/fa";
 import Logo from "../Components/shared/Logo";
 import ThemeButton from "../Components/shared/Buttons/ThemeButton";
@@ -15,6 +16,8 @@ import { ThemeContext } from "../Theme/ThemeProvider";
 import { LuSunMoon } from "react-icons/lu";
 import { CiLight } from "react-icons/ci";
 import { AuthContext } from "../provider/AuthProvider";
+import useRole from "../Hooks/useRole";
+import Loading from "../Pages/Loading";
 
 const links = (
   <>
@@ -45,6 +48,8 @@ const links = (
 const DashboardLayout = () => {
   const { theme, toggleTheme } = use(ThemeContext);
   const { user } = use(AuthContext);
+  const [role, isRoleLoading] = useRole();
+  if (isRoleLoading) return <Loading/>
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -140,6 +145,14 @@ const DashboardLayout = () => {
               Home
             </NavLink>
           </li>
+          {role === 'user' && (
+  <li>
+    <NavLink to="/dashboard/be-vendor">
+    <FaRegFileAlt />
+    Be a Vendor
+    </NavLink>
+  </li>
+)}
           <li>
             <NavLink to="/dashboard/add-product">
               <FaUserEdit className="inline-block mr-2" />
@@ -174,6 +187,12 @@ const DashboardLayout = () => {
             <NavLink to="/dashboard/all-products-admin">
               <FaBoxOpen className="inline-block mr-2" />
              All Products (Admin)
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/vendor-requests">
+              <FaSearchLocation className="inline-block mr-2" />
+              Vendor Requests
             </NavLink>
           </li>
         </ul>

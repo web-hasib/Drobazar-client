@@ -76,11 +76,11 @@ const AllProductsAdmin = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold mb-6">All Products (Admin View)</h2>
+    <div className="max-w-7xl mx-auto px-4 py-10">
+      <h2 className="text-3xl text-lime-500 text-center font-bold mb-6">All Products (Admin View)</h2>
 
       {/* Filter controls */}
-      <div className="flex gap-4 items-center mb-4">
+      <div className="flex justify-between items-center mb-4">
         <select
           className="select select-bordered"
           value={statusFilter}
@@ -110,7 +110,7 @@ const AllProductsAdmin = () => {
 
       {/* Product Table */}
       <div className="overflow-x-auto">
-        <table className="table w-full border">
+        <table className="table w-full border border-dashed border-lime-200/10 table-zebra">
           <thead className="bg-base-200">
             <tr>
               <th>#</th>
