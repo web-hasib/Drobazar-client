@@ -12,6 +12,7 @@ import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import AllProducts from "../Pages/AllProducts";
 import ProductDetails from "../Pages/ProductDetails";
 import MyPayments from "../Pages/UsersPage/MyPayments";
+import MyCarts from "../Pages/UsersPage/MyCart";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
             {
                 path:'my-payments',
                 element:<PrivateRoute><MyPayments/></PrivateRoute>
+            },
+            {
+                path:'cart',
+                element:<PrivateRoute><MyCarts></MyCarts></PrivateRoute>
             }
         ]
     },

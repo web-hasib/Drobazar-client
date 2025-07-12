@@ -1,20 +1,21 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import './checkoutForm.css'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { ClipLoader } from 'react-spinners'
 import { toast } from 'react-toastify'
-
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { AuthContext } from '../../provider/AuthProvider'
+import { useNavigate } from 'react-router-dom'
 
 const CheckoutForm = ({ totalPrice, closeModal, orderData }) => {
-  const { user } = use(AuthContext)
+  const { user } = useContext(AuthContext)
   const axiosSecure = useAxiosSecure()
   const stripe = useStripe()
   const elements = useElements()
   const [cardError, setCardError] = useState(null)
   const [processing, setProcessing] = useState(false)
   const [clientSecret, setClientSecret] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getClientSecret = async () => {
@@ -25,8 +26,8 @@ const CheckoutForm = ({ totalPrice, closeModal, orderData }) => {
         })
         setClientSecret(data?.clientSecret)
       } catch (err) {
-        console.error('Error getting client secret---->>:', err)
-        toast.error(err?.response?.data?.message || 'Failed to initiate payment.');
+        console.error('Client secret error:', err)
+        toast.error(err?.response?.data?.message || 'Failed to initiate payment.')
       }
     }
 
@@ -82,15 +83,14 @@ const CheckoutForm = ({ totalPrice, closeModal, orderData }) => {
         ...orderData,
         productsTotalCost: totalPrice,
         transactionId: result?.paymentIntent?.id,
-       
       }
-console.log('hellow ',paymentInfo);
-      // console.log("paymentInfor after payment", paymentInfo);
-        //  setProcessing(false)
+
       try {
         const { data } = await axiosSecure.post('/payments', paymentInfo)
         if (data?.insertedId) {
           toast.success('✅ Order Placed Successfully!')
+          closeModal()
+          navigate('/dashboard/my-payments') 
         }
       } catch (err) {
         toast.error('Order saving failed.')
@@ -98,7 +98,6 @@ console.log('hellow ',paymentInfo);
       } finally {
         setProcessing(false)
         setCardError(null)
-        closeModal()
       }
     }
 
@@ -115,19 +114,18 @@ console.log('hellow ',paymentInfo);
               color: '#424770',
               '::placeholder': { color: '#aab7c4' },
             },
-            invalid: {
-              color: '#9e2146',
-            },
+            invalid: { color: '#9e2146' },
           },
         }}
       />
 
       {cardError && <p className='text-red-500 mt-2'>{cardError}</p>}
+
       {totalPrice < 50 && (
-  <div className="text-sm text-yellow-600 bg-yellow-100 border border-yellow-300 p-2 rounded">
-    This product price is below the minimum Stripe amount. Increase quantity to reach ৳50 or more.
-  </div>
-)}
+        <div className="text-sm text-yellow-600 bg-yellow-100 border border-yellow-300 p-2 rounded">
+          This product price is below the minimum Stripe amount. Increase quantity to reach ৳50 or more.
+        </div>
+      )}
 
       <div className='flex justify-between mt-6'>
         <button

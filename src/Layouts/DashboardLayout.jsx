@@ -6,6 +6,7 @@ import {
   FaMoneyCheckAlt,
   FaUserEdit,
   FaSearchLocation,
+  FaShoppingCart,
 } from "react-icons/fa";
 import Logo from "../Components/shared/Logo";
 import ThemeButton from "../Components/shared/Buttons/ThemeButton";
@@ -143,30 +144,6 @@ const DashboardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/myParcels">
-              <FaBoxOpen className="inline-block mr-2" />
-              My Parcels
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/paymentHistory">
-              <FaMoneyCheckAlt className="inline-block mr-2" />
-              Payment History
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/track">
-              <FaSearchLocation className="inline-block mr-2" />
-              Track a Package
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/profile">
-              <FaUserEdit className="inline-block mr-2" />
-              Update Profile
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/dashboard/add-product">
               <FaUserEdit className="inline-block mr-2" />
               add Product
@@ -176,6 +153,12 @@ const DashboardLayout = () => {
   <NavLink to="/dashboard/my-payments">
     <FaMoneyCheckAlt className="inline-block mr-2" />
     My Payments
+  </NavLink>
+</li>
+<li>
+  <NavLink to="/dashboard/cart">
+    <FaShoppingCart className="inline-block mr-2" />
+    My Cart
   </NavLink>
 </li>
         </ul>

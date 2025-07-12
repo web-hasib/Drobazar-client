@@ -1,19 +1,21 @@
-import { useParams } from "react-router";
-import React, { useEffect, useState, use } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import { FaStar } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 import Loading from "./Loading";
-
 import { AuthContext } from "../provider/AuthProvider";
 import PurchaseModal from "../Components/Modals/PurchaseModal";
 import PayButton from "../Components/shared/Buttons/PayButton";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +62,7 @@ const ProductDetails = () => {
       message: data.message,
       time: new Date().toISOString(),
     };
-    console.log(review);
+
     try {
       if (hasReviewed) {
         await axios.patch(
@@ -84,9 +86,43 @@ const ProductDetails = () => {
       console.error("Review error:", err);
     }
   };
+
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const handleAddToCart = async () => {
+    if (!user) return toast.error("Please login to add to cart");
+
+    const cartItem = {
+      productId: product._id,
+      itemName,
+      image,
+      price: price?.at(-1)?.price,
+      unit: price?.at(-1)?.unit,
+      quantity: 1,
+      addedAt: new Date(),
+    };
+
+    try {
+      const res = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/users/cart/${user.email}`,
+        cartItem
+      );
+
+      if (res.data.modifiedCount > 0) {
+        toast.success("Added to cart!");
+        navigate("/dashboard/cart");
+      } else {
+        toast.info("Already added or not updated.");
+      }
+    } catch (err) {
+      console.error("Add to cart error:", err);
+      toast.error("Failed to add to cart.");
+    }
+  };
+
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 text-base-content">
@@ -113,18 +149,26 @@ const ProductDetails = () => {
               🗓 {format(new Date(date), "PPP")}
             </p>
             <p className="mt-2 text-sm">{description}</p>
-            {/* Purchase button           */}
+
             <button
-              disabled={user?.email === vendor?.email}
-              // || role !== 'user'
+              disabled={isVendor}
               onClick={() => setIsOpen(true)}
+              className="btn btn-primary w-full"
             >
-              <PayButton text="Order Now"></PayButton>
+              <PayButton text="Order Now" />
+            </button>
+
+            <button
+              onClick={handleAddToCart}
+              disabled={isVendor}
+              className="btn btn-outline btn-secondary w-full mt-3"
+            >
+              Add to Cart
             </button>
           </div>
         </div>
 
-        {/* Market Description */}
+        {/* Market Info */}
         <div>
           <h3 className="text-lg font-bold">Market Info</h3>
           <p>
@@ -156,7 +200,6 @@ const ProductDetails = () => {
           <h3 className="text-xl font-bold text-base-content mb-4">
             Reviews ({reviews.length})
           </h3>
-
           {reviews.length === 0 ? (
             <p className="text-sm text-base-content/60">No reviews yet.</p>
           ) : (
@@ -164,7 +207,7 @@ const ProductDetails = () => {
               {reviews.map((review, index) => (
                 <li
                   key={index}
-                  className="bg-base-200 p-4 rounded-lg border border-base-300 shadow-sm hover:shadow-md transition-all"
+                  className="bg-base-200 p-4 rounded-lg border border-base-300 shadow-sm"
                 >
                   <div className="flex flex-col md:flex-row mb-3 justify-between">
                     <div className="flex items-center gap-3 mb-2">
@@ -180,7 +223,6 @@ const ProductDetails = () => {
                         </p>
                       </div>
                     </div>
-
                     <div className="flex gap-1 text-yellow-400 text-sm mb-7">
                       {[...Array(5)].map((_, i) => (
                         <FaStar
@@ -194,7 +236,6 @@ const ProductDetails = () => {
                       ))}
                     </div>
                   </div>
-
                   <p className="text-sm text-base-content/50">
                     {review.message}
                   </p>
@@ -207,34 +248,27 @@ const ProductDetails = () => {
         {/* Review Form */}
         <div className="mt-12 bg-base-200 p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold mb-3">Leave a Review</h3>
-
           {isVendor && (
             <p className="text-sm text-red-500">
               Vendors cannot review their own product.
             </p>
           )}
-
           {!isVendor && hasReviewed && (
             <p className="text-sm text-yellow-600">
               You already reviewed this product. You can edit below.
             </p>
           )}
-
           {!isVendor && (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium">
-                  Your Rating:
-                </label>
+                <label className="block text-sm font-medium">Your Rating:</label>
                 <div className="flex gap-1 mt-1">
                   {[...Array(5)].map((_, i) => (
                     <button
                       type="button"
                       key={i}
                       onClick={() => setRating(i + 1)}
-                      className={`text-2xl ${
-                        i < rating ? "text-yellow-400" : "text-gray-300"
-                      }`}
+                      className={`text-2xl ${i < rating ? "text-yellow-400" : "text-gray-300"}`}
                     >
                       ★
                     </button>
@@ -243,9 +277,7 @@ const ProductDetails = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium">
-                  Your Message:
-                </label>
+                <label className="block text-sm font-medium">Your Message:</label>
                 <textarea
                   {...register("message", { required: true })}
                   defaultValue={hasReviewed?.message || ""}
@@ -273,6 +305,7 @@ const ProductDetails = () => {
         closeModal={closeModal}
         isOpen={isOpen}
         price={price?.at(-1)?.price}
+       
       />
     </div>
   );
