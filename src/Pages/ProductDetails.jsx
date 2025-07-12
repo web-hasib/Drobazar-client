@@ -16,6 +16,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -185,8 +186,8 @@ const ProductDetails = () => {
           <h3 className="text-lg font-bold mb-2">Vendor Info</h3>
           <div className="flex items-center gap-3">
             <img
-              src={vendor?.photo}
-              alt={vendor?.name}
+              src={ !vendor.photo || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740"}
+              alt='vendor'
               className="w-12 h-12 rounded-full border"
             />
             <div>

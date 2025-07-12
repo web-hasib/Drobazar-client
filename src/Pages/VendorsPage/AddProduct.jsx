@@ -62,14 +62,16 @@ const AddProduct = () => {
   itemName: data.itemName,
   category: data.category, // <-- new
   description: data.description,
-  price: {
+  price: [
+    {
     price: parseFloat(data.price),
     date: now,
     unit: data.unit,
-  },
+  }
+  ],
   marketDescription: data.marketDescription,
   image: imageUrl,
-  status: 'approved',
+  status: 'pending',
   vendor: {
     name: currentUser.displayName || 'Anonymous',
     email: currentUser.email,

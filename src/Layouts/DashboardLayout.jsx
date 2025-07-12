@@ -7,6 +7,7 @@ import {
   FaUserEdit,
   FaSearchLocation,
   FaShoppingCart,
+  FaUsers,
 } from "react-icons/fa";
 import Logo from "../Components/shared/Logo";
 import ThemeButton from "../Components/shared/Buttons/ThemeButton";
@@ -15,38 +16,35 @@ import { LuSunMoon } from "react-icons/lu";
 import { CiLight } from "react-icons/ci";
 import { AuthContext } from "../provider/AuthProvider";
 
- const links = (
-    <>
-      <NavLink className="hover:text-black hover:font-bold" to="/">
-        {" "}
-        Home
-      </NavLink>
-      {/* <NavLink className="hover:text-black hover:font-bold" to="/allRecipes">
+const links = (
+  <>
+    <NavLink className="hover:text-black hover:font-bold" to="/">
+      {" "}
+      Home
+    </NavLink>
+    {/* <NavLink className="hover:text-black hover:font-bold" to="/allRecipes">
         {" "}
         All Recipes
       </NavLink> */}
 
-      <NavLink
-        className="hover:text-black hover:font-bold"
-        to="/dashboard"
-      >
-        {" "}
-        Dashboard
-      </NavLink>
-      <NavLink className="hover:text-black hover:font-bold" to="/about">
-        {" "}
-        About
-      </NavLink>
-      <NavLink className="hover:text-black hover:font-bold" to="/contact">
-        {" "}
-        Contact
-      </NavLink>
-    </>
-  );
+    <NavLink className="hover:text-black hover:font-bold" to="/dashboard">
+      {" "}
+      Dashboard
+    </NavLink>
+    <NavLink className="hover:text-black hover:font-bold" to="/about">
+      {" "}
+      About
+    </NavLink>
+    <NavLink className="hover:text-black hover:font-bold" to="/contact">
+      {" "}
+      Contact
+    </NavLink>
+  </>
+);
 
 const DashboardLayout = () => {
-    const { theme, toggleTheme } = use(ThemeContext);
-    const { user } = use(AuthContext);
+  const { theme, toggleTheme } = use(ThemeContext);
+  const { user } = use(AuthContext);
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -82,43 +80,42 @@ const DashboardLayout = () => {
         </div>
         {/* Page content here */}
         <div className="">
-            {/* start  */}
-             <div className="navbar hidden  lg:visible bg-base-200/40 w-full lg:flex">
-          <div className="mx-2 flex-1 px-2  items-center justify-between lg:flex">
-           {/* links  */}
-           <ul className="menu menu-horizontal px-1 gap-3">
-            {links}
-           </ul>
-            <div className="flex items-center gap-2">
-                 <ThemeButton onClick={toggleTheme} label={theme === "light" ? (
-                              <LuSunMoon size={20} color="black" />
-                            ) : (
-                              <CiLight size={20} color="white" />
-                            )}></ThemeButton>
-                          {user?.photoURL && (
-                            <Link to="/profile" className="relative group inline-block">
-                              <img
-                                className="w-8 h-8 rounded-full object-cover"
-                                src={user.photoURL}
-                                alt=""
-                              />
-                              <div className="absolute top-full mt-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 whitespace-nowrap">
-                                {user.displayName}
-                              </div>
-                            </Link>
-                          )}
+          {/* start  */}
+          <div className="navbar hidden  lg:visible bg-base-200/40 w-full lg:flex">
+            <div className="mx-2 flex-1 px-2  items-center justify-between lg:flex">
+              {/* links  */}
+              <ul className="menu menu-horizontal px-1 gap-3">{links}</ul>
+              <div className="flex items-center gap-2">
+                <ThemeButton
+                  onClick={toggleTheme}
+                  label={
+                    theme === "light" ? (
+                      <LuSunMoon size={20} color="black" />
+                    ) : (
+                      <CiLight size={20} color="white" />
+                    )
+                  }
+                ></ThemeButton>
+                {user?.photoURL && (
+                  <Link to="/profile" className="relative group inline-block">
+                    <img
+                      className="w-8 h-8 rounded-full object-cover"
+                      src={user.photoURL}
+                      alt=""
+                    />
+                    <div className="absolute top-full mt-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 whitespace-nowrap">
+                      {user.displayName}
+                    </div>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
 
-        
-        </div>
-
-
-        {/* finish  */}
+          {/* finish  */}
         </div>
         <main className="min-h-[calc(100vh-60px)] flex-1 p-4">
-
-        <Outlet></Outlet>
+          <Outlet></Outlet>
         </main>
         <div>
           <p className="text-[6px] md:text-[10px] text-center lg:text-sm font-thin italic text-gray-400">
@@ -150,17 +147,35 @@ const DashboardLayout = () => {
             </NavLink>
           </li>
           <li>
-  <NavLink to="/dashboard/my-payments">
-    <FaMoneyCheckAlt className="inline-block mr-2" />
-    My Payments
-  </NavLink>
-</li>
-<li>
-  <NavLink to="/dashboard/cart">
-    <FaShoppingCart className="inline-block mr-2" />
-    My Cart
-  </NavLink>
-</li>
+            <NavLink to="/dashboard/my-products">
+              <FaBoxOpen className="inline-block mr-2" />
+              My Products
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/my-payments">
+              <FaMoneyCheckAlt className="inline-block mr-2" />
+              My Payments
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/cart">
+              <FaShoppingCart className="inline-block mr-2" />
+              My Cart
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/manage-users">
+              <FaUsers className="inline-block mr-2" />
+              Manage Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/all-products-admin">
+              <FaBoxOpen className="inline-block mr-2" />
+             All Products (Admin)
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>

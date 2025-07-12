@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { use } from "react";
 import { imageUpload } from "../api/utils"; // ✅ import image uploader
+import useRole from "../Hooks/useRole";
+import Loading from "./Loading";
 
 const Profile = () => {
   const { user, updateUser } = use(AuthContext);
@@ -10,7 +12,7 @@ const Profile = () => {
   const [photo, setPhoto] = useState(user.photoURL || "");
   const [showDetails, setShowDetails] = useState(false);
   const [uploading, setUploading] = useState(false); // For image upload status
-
+  const [role, isRoleLoading] = useRole(); // ✅ use custom hook to get user role
   // 🖼 Handle image upload via ImgBB
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -41,6 +43,7 @@ const Profile = () => {
       window.alert("Update failed: " + error.message);
     }
   };
+  if(isRoleLoading) return <Loading/>
 
   return (
     <div className="mx-4 py-10">
@@ -102,6 +105,9 @@ const Profile = () => {
                 <span className="font-semibold">Email Verified:</span>{" "}
                 {user.emailVerified ? "Yes" : "No"}
               </p>
+              <span>
+                <span className="font-semibold">Role:</span> {role || "User"}
+              </span>
 
               <div className="pt-4 flex flex-col md:flex-row space-y-5 space-x-2">
                 <button

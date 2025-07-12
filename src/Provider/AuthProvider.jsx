@@ -37,14 +37,34 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    setUser(currentUser);
+    setLoading(false);
+
+    if (currentUser) {
+      // ✅ Request JWT token from backend
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/jwt`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: currentUser.email }),
+        });
+        const data = await res.json();
+        localStorage.setItem('access-token', data.token);
+      } catch (err) {
+        console.error('JWT fetch error:', err);
+      }
+    } else {
+      // ✅ Remove token on logout
+      localStorage.removeItem('access-token');
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
+
 
   const authData = {
     user,

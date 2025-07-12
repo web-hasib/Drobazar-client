@@ -13,6 +13,9 @@ import AllProducts from "../Pages/AllProducts";
 import ProductDetails from "../Pages/ProductDetails";
 import MyPayments from "../Pages/UsersPage/MyPayments";
 import MyCarts from "../Pages/UsersPage/MyCart";
+import ManageUsers from "../Pages/AdminsPage/ManageUsers";
+import MyProducts from "../Pages/VendorsPage/MyProducts";
+import AllProductsAdmin from "../Pages/AdminsPage/AllProductsAdmin";
 
 export const router = createBrowserRouter([
     {
@@ -65,6 +68,18 @@ export const router = createBrowserRouter([
             {
                 path:'cart',
                 element:<PrivateRoute><MyCarts></MyCarts></PrivateRoute>
+            },
+            {
+                path:'manage-users',
+                element:<PrivateRoute><ManageUsers/></PrivateRoute>
+            },
+            {
+                path: 'all-products-admin',
+                element: <PrivateRoute><AllProductsAdmin /></PrivateRoute>
+            },
+            {
+                path:'my-products',
+                element:<PrivateRoute><MyProducts/></PrivateRoute>
             }
         ]
     },
