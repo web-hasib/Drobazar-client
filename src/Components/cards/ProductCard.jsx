@@ -45,7 +45,7 @@ const ProductCard = ({ product }) => {
               {itemName}
             </Typography>
             <Typography color="blue-gray" className="font-medium">
-              ৳{price?.price} {price?.unit}
+              ৳ {price?.at(-1)?.price} {price?.at(-1)?.unit}
             </Typography>
           </div>
           <Typography

@@ -1,0 +1,71 @@
+
+
+@layer utilities {
+  @keyframes iconRotate {
+    0% {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px) scale(0.5);
+    }
+    5%, 15% {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    20%, 100% {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px) scale(0.5);
+    }
+  }
+
+  @keyframes checkmarkAppear {
+    0% {
+      opacity: 0;
+      transform: scale(0.5) rotate(-45deg);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.2) rotate(0deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+}
+
+/* Hover animations */
+.pay-btn:hover .wallet-icon {
+  @apply opacity-0 invisible;
+}
+
+.pay-btn:hover .card-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 0s;
+}
+
+.pay-btn:hover .payment-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 0.5s;
+}
+
+.pay-btn:hover .dollar-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 1s;
+}
+
+.pay-btn:hover .check-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 1.5s;
+}
+
+.pay-btn:active .icon {
+  @apply opacity-0 invisible;
+  animation: none !important;
+}
+
+.pay-btn:active .check-icon {
+  animation: checkmarkAppear 0.6s ease forwards;
+  visibility: visible;
+}

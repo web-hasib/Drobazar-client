@@ -56,8 +56,8 @@ const SIngleProductCard = ({ product }) => {
           <div className="flex items-center gap-2 pt-1">
             <MdOutlineAttachMoney className="text-lime-300" />
             <span className="font-semibold text-lime-500">
-              ৳{price?.price}
-              <span className="ml-1 text-xs">{price?.unit}</span>
+              ৳{price?.at(-1)?.price}
+              <span className="ml-1 text-xs">{price?.at(-1)?.unit}</span>
             </span>
           </div>
         </div>

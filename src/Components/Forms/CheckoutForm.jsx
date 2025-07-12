@@ -25,8 +25,8 @@ const CheckoutForm = ({ totalPrice, closeModal, orderData }) => {
         })
         setClientSecret(data?.clientSecret)
       } catch (err) {
-        console.error('Error getting client secret:', err)
-        toast.error('Failed to initiate payment.')
+        console.error('Error getting client secret---->>:', err)
+        toast.error(err?.response?.data?.message || 'Failed to initiate payment.');
       }
     }
 
@@ -123,12 +123,17 @@ console.log('hellow ',paymentInfo);
       />
 
       {cardError && <p className='text-red-500 mt-2'>{cardError}</p>}
+      {totalPrice < 50 && (
+  <div className="text-sm text-yellow-600 bg-yellow-100 border border-yellow-300 p-2 rounded">
+    This product price is below the minimum Stripe amount. Increase quantity to reach ৳50 or more.
+  </div>
+)}
 
       <div className='flex justify-between mt-6'>
         <button
-          className='px-4 py-2 bg-green-500 text-white rounded-md'
+          className='px-4 py-2 bg-green-500 text-white rounded-md disabled:cursor-not-allowed disabled:bg-green-50 disabled:text-gray-700'
           type='submit'
-          disabled={!stripe || processing}
+          disabled={!stripe || processing || totalPrice <= 50}
         >
           {processing ? <ClipLoader size={22} color="#fff" /> : `Pay ৳${totalPrice}`}
         </button>

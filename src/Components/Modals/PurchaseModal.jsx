@@ -13,6 +13,7 @@ import CheckoutForm from '../Forms/CheckoutForm'
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
 const PurchaseModal = ({ closeModal, isOpen, product,price  }) => {
   const { user } = use(AuthContext)
+  // return console.log("price in parches modal: ", price);
 //   console.log(user)
   const {_id,itemName,category,image} = product || {}
   const [selectedQuantity, setSelectedQuantity] = useState(1)
@@ -40,7 +41,7 @@ const PurchaseModal = ({ closeModal, isOpen, product,price  }) => {
         }
       })
   }, [user])
-
+  
   const handleQuantity = value => {
     const totalQuantity = parseInt(value)
     
@@ -56,7 +57,7 @@ const PurchaseModal = ({ closeModal, isOpen, product,price  }) => {
       }
     })
   }
-
+// return console.log("orderData in purchase modal: ", orderData);
   return (
     <Dialog
       open={isOpen}
@@ -94,7 +95,7 @@ const PurchaseModal = ({ closeModal, isOpen, product,price  }) => {
             
             <hr className='mt-2' />
             <p className='text-base-content'>Order Info:</p>
-            <div className='mt-2'>
+            {/* <div className='mt-2'>
               <input
                 value={selectedQuantity}
                 onChange={e => handleQuantity(e.target.value)}
@@ -102,7 +103,28 @@ const PurchaseModal = ({ closeModal, isOpen, product,price  }) => {
                 min={1}
                 className='border px-3 py-1'
               />
-            </div>
+            </div> */}
+            <div className="flex items-center gap-3 mt-2">
+  <button
+    onClick={() => {
+      if (selectedQuantity > 1) {
+        handleQuantity(selectedQuantity - 1);
+      }
+    }}
+    className="px-3 py-1 bg-base-100 text-lg rounded-full hover:bg-lime-100"
+  >
+    −
+  </button>
+
+  <span className="font-semibold text-lg">{selectedQuantity}</span>
+
+  <button
+    onClick={() => handleQuantity(selectedQuantity + 1)}
+    className="px-3 py-1 bg-base-100 text-lg rounded-full hover:bg-lime-100"
+  >
+    +
+  </button>
+</div>
 
             <div className='mt-2'>
               <p className='text-sm text-gray-500'>
