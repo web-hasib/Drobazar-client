@@ -19,6 +19,7 @@ import { AuthContext } from "../provider/AuthProvider";
 import useRole from "../Hooks/useRole";
 import Loading from "../Pages/Loading";
 import "./dashboard.css"
+import DayNightToggle from "../Components/shared/Buttons/DayNightToggle";
 
 const links = (
   <>
@@ -92,7 +93,7 @@ const DashboardLayout = () => {
               {/* links  */}
               <ul className="menu menu-horizontal px-1 gap-3">{links}</ul>
               <div className="flex items-center gap-2">
-                <ThemeButton
+                {/* <ThemeButton
                   onClick={toggleTheme}
                   label={
                     theme === "light" ? (
@@ -101,7 +102,8 @@ const DashboardLayout = () => {
                       <CiLight size={20} color="white" />
                     )
                   }
-                ></ThemeButton>
+                ></ThemeButton> */}
+                 <DayNightToggle isDarkMode={theme === 'dark'} toggleTheme={toggleTheme} size={25} />
                 {user?.photoURL && (
                   <Link to="/profile" className="relative group inline-block">
                     <img
@@ -137,7 +139,7 @@ const DashboardLayout = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-2 space-y-3 mt-4">
+        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-2 space-y-3">
           {/* Sidebar content here */}
           <Logo />
           <li className="mt-5">

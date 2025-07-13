@@ -3,13 +3,14 @@ import { Link, NavLink } from "react-router";
 // import { AuthContext } from "../Provider/AuthProvider";
 // import Swal from "sweetalert2";
 
-import { CiLight } from "react-icons/ci";
-import { LuSunMoon } from "react-icons/lu";
+// import { CiLight } from "react-icons/ci";
+// import { LuSunMoon } from "react-icons/lu";
 import { ThemeContext } from "../Theme/ThemeProvider";
 import Logo from "./shared/Logo";
 import { AuthContext } from "../provider/AuthProvider";
-import ThemeButton from "./shared/Buttons/ThemeButton";
+// import ThemeButton from "./shared/Buttons/ThemeButton";
 import AuthButton from "./shared/Buttons/AuthButton";
+import DayNightToggle from "./shared/Buttons/DayNightToggle";
 
 {
   /* <img src="https://i.ibb.co/jvscyq8R/2-removebg-preview.png" alt="" /> */
@@ -73,11 +74,13 @@ const Navbar = () => {
           
           {/* Theme Button */}
          
-          <ThemeButton onClick={toggleTheme} label={theme === "light" ? (
+          {/* <ThemeButton onClick={toggleTheme} label={theme === "light" ? (
               <LuSunMoon size={20} color="black" />
             ) : (
               <CiLight size={20} color="white" />
-            )}></ThemeButton>
+            )}></ThemeButton> */}
+
+            <DayNightToggle isDarkMode={theme === 'dark'} toggleTheme={toggleTheme} size={30} />
           {user?.photoURL && (
             <Link to="/profile" className="relative group inline-block">
               <img
@@ -147,13 +150,14 @@ const Navbar = () => {
 
              
                 {/* Theme Button */}
-          <button onClick={toggleTheme} className="btn rounded-full">
+        <DayNightToggle isDarkMode={theme === 'dark'} toggleTheme={toggleTheme} size={25} />
+          {/* <button onClick={toggleTheme} className="btn rounded-full">
             {theme === "light" ? (
               <LuSunMoon size={20} color="black" />
             ) : (
               <CiLight size={20} color="white" />
             )}
-          </button>
+          </button> */}
             </div>
             {links}
              {user ? (
