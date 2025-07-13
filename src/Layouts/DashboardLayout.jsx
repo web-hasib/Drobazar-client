@@ -18,6 +18,7 @@ import { CiLight } from "react-icons/ci";
 import { AuthContext } from "../provider/AuthProvider";
 import useRole from "../Hooks/useRole";
 import Loading from "../Pages/Loading";
+import "./dashboard.css"
 
 const links = (
   <>
@@ -136,10 +137,10 @@ const DashboardLayout = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-2 space-y-3 mt-4">
           {/* Sidebar content here */}
           <Logo />
-          <li>
+          <li className="mt-5">
             <NavLink to="/dashboard">
               <FaHome className="inline-block mr-2" />
               Home
@@ -153,10 +154,19 @@ const DashboardLayout = () => {
     </NavLink>
   </li>
 )}
-          <li>
+{
+  role === 'vendor' && (
+    <>
+     <li>
             <NavLink to="/dashboard/add-product">
               <FaUserEdit className="inline-block mr-2" />
               add Product
+            </NavLink>
+          </li>
+     <li>
+            <NavLink to="/dashboard/request-advertisement">
+              <FaUserEdit className="inline-block mr-2" />
+              request advertisement
             </NavLink>
           </li>
           <li>
@@ -165,6 +175,16 @@ const DashboardLayout = () => {
               My Products
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/my-advertisement">
+              <FaBoxOpen className="inline-block mr-2" />
+              My Advertisement
+            </NavLink>
+          </li>
+    </>
+  )
+}
+         
           <li>
             <NavLink to="/dashboard/my-payments">
               <FaMoneyCheckAlt className="inline-block mr-2" />
@@ -177,7 +197,9 @@ const DashboardLayout = () => {
               My Cart
             </NavLink>
           </li>
-          <li>
+          {role === 'admin' && (
+            <>
+             <li>
             <NavLink to="/dashboard/manage-users">
               <FaUsers className="inline-block mr-2" />
               Manage Users
@@ -190,11 +212,20 @@ const DashboardLayout = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/dashboard/all-advertisements">
+              <FaBoxOpen className="inline-block mr-2" />
+              all Advertisement
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/dashboard/vendor-requests">
               <FaSearchLocation className="inline-block mr-2" />
               Vendor Requests
             </NavLink>
           </li>
+            </>
+          )}
+         
         </ul>
       </div>
     </div>

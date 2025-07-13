@@ -3,6 +3,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import Loading from '../Loading';
 
 const VendorRequests = () => {
   const axios = useAxiosSecure();
@@ -27,14 +28,16 @@ const VendorRequests = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+  if (isLoading) return <Loading/>
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold mb-6">Vendor Requests</h2>
+    <div className="max-w-7xl mx-auto px-4 py-10">
+      <h2 className="text-3xl text-lime-400 text-center font-bold mb-6">Vendor Requests</h2>
 
-      {requests.length === 0 ? (
-        <p>No vendor requests available.</p>
+      {requests.length === 0 ? (<div className='flex mt-30 flex-col items-center justify-center h-64'>
+        <img src="https://i.ibb.co/VWLpSk2N/empty.png" alt="" />
+        <p className='text-yellow-400 text-center mt-10'>
+          No vendor requests available.</p></div>
       ) : (
         <div className="overflow-x-auto">
           <table className="table">

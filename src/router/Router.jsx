@@ -19,90 +19,174 @@ import AllProductsAdmin from "../Pages/AdminsPage/AllProductsAdmin";
 import EditProduct from "../Pages/VendorsPage/EditProduct";
 import BeVendor from "../Pages/UsersPage/BeVendor";
 import VendorRequests from "../Pages/AdminsPage/VendorRequests";
+import VendorRoute from "../Routes/VendorRoute";
+import AdminRoute from "../Routes/AdminRoute";
+import RequestAdvertisement from "../Pages/VendorsPage/RequistAdvertisement";
+import MyAdvertisements from "../Pages/VendorsPage/MyAdvertisements";
+import AllAdvertisements from "../Pages/AdminsPage/AllAdvertisements";
 
 export const router = createBrowserRouter([
-    {
-        path:'/',
-        Component:MainLayout,
-        children:[
-            {
-                index:true,
-                Component:Home
-            },
-            {
-                path:'all-items',
-                element: <AllProducts></AllProducts>
-            },
-            {
-                path: 'login',
-                Component: Login
-            },
-            {
-                path:'register',
-                Component:Register
-            },{
-                path:'profile',
-                element:<PrivateRoute><Profile/></PrivateRoute>
-            }
-        ,
-           
-            {
-                path:'product/:id',
-                element:<PrivateRoute><ProductDetails/></PrivateRoute>
-        
-            }
-        ]
-    },
-    {
-        path:'dashboard',
-        Component: DashboardLayout,
-        children:[
-            {
-                index:true,
-                element:<DashboardHome></DashboardHome>
-            },
-            {
-                path:'be-vendor',
-                element:<PrivateRoute><BeVendor/></PrivateRoute>
-            } 
-            ,
-            {
-                path:'add-product',
-                element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
-            },
-            {
-                path:'edit-product/:id',
-                element:<PrivateRoute><EditProduct/></PrivateRoute>
-            },
-            {
-                path:'my-payments',
-                element:<PrivateRoute><MyPayments/></PrivateRoute>
-            },
-            {
-                path:'cart',
-                element:<PrivateRoute><MyCarts></MyCarts></PrivateRoute>
-            },
-            {
-                path:'manage-users',
-                element:<PrivateRoute><ManageUsers/></PrivateRoute>
-            },
-            {
-                path:'vendor-requests',
-                element:<PrivateRoute><VendorRequests/></PrivateRoute>
-            },
-            {
-                path: 'all-products-admin',
-                element: <PrivateRoute><AllProductsAdmin /></PrivateRoute>
-            },
-            {
-                path:'my-products',
-                element:<PrivateRoute><MyProducts/></PrivateRoute>
-            }
-        ]
-    },
-    {
-        path: '*',
-        Component: Error
-    }
+  {
+    path: "/",
+    Component: MainLayout,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "all-items",
+        element: <AllProducts></AllProducts>,
+      },
+      {
+        path: "login",
+        Component: Login,
+      },
+      {
+        path: "register",
+        Component: Register,
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "product/:id",
+        element: (
+          <PrivateRoute>
+            <ProductDetails />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    Component: DashboardLayout,
+    children: [
+      {
+        index: true,
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "be-vendor",
+        element: (
+          <PrivateRoute>
+            <BeVendor />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-product",
+        element: (
+          <PrivateRoute>
+            <VendorRoute>
+              <AddProduct></AddProduct>
+            </VendorRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "request-advertisement",
+        element: (
+          <PrivateRoute>
+            <VendorRoute>
+              <RequestAdvertisement></RequestAdvertisement>
+            </VendorRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path:'my-advertisement',
+        element:<PrivateRoute>
+          <VendorRoute>
+            <MyAdvertisements></MyAdvertisements>
+          </VendorRoute>
+        </PrivateRoute>
+      },
+      {
+        path: "edit-product/:id",
+        element: (
+          <PrivateRoute>
+            <VendorRoute>
+              <EditProduct />
+            </VendorRoute>
+          </PrivateRoute>
+        ),
+      },
 
-])
+      {
+        path: "my-payments",
+        element: (
+          <PrivateRoute>
+            <MyPayments />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "cart",
+        element: (
+          <PrivateRoute>
+            <MyCarts></MyCarts>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "vendor-requests",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <VendorRequests />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "all-products-admin",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllProductsAdmin />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path:'all-advertisements',
+        element:<PrivateRoute>
+          <AdminRoute>
+            <AllAdvertisements></AllAdvertisements>
+          </AdminRoute>
+        </PrivateRoute>
+      },
+      {
+        path: "my-products",
+        element: (
+          <PrivateRoute>
+            <VendorRoute>
+              <MyProducts />
+            </VendorRoute>
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "*",
+    Component: Error,
+  },
+]);

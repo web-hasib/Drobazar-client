@@ -36,10 +36,13 @@ const MyCarts = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold mb-6">🛒 My Cart Items ({cart.length})</h2>
+      <h2 className="text-3xl text-lime-500 text-center font-bold mb-6">🛒 My Cart Items ({cart.length})</h2>
 
       {cart.length === 0 ? (
-        <p className="text-gray-500">You have no items in your cart.</p>
+       <div className='mt-20'> 
+          <img src="https://i.ibb.co/rKH5dWJt/emptycart-removebg-preview.png" alt="Empty Cart" className="mx-auto mb-4" />
+         <p className="text-yellow-400 text-center">You have no items in your cart.</p>
+       </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="table w-full border">

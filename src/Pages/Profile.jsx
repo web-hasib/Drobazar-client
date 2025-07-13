@@ -46,7 +46,7 @@ const Profile = () => {
   if(isRoleLoading) return <Loading/>
 
   return (
-    <div className="mx-4 py-10">
+    <div className=" max-w-7xl mx-auto py-10">
       <h1 className="text-3xl font-bold text-center text-lime-700/70 mb-6">
         Welcome, <span className="text-lime-600/90">{user.displayName || "User"}</span>
       </h1>
