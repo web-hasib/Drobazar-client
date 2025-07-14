@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="flex items-center gap-3 ">
        <Logo/>
       </div>
-      <div className=" text-[8px] md:text-[10px] lg:text-sm">
+      <div className=" text-[8px] md:text-[10px] z-50 lg:text-sm">
        
          
              <ul className="flex gap-3">
@@ -24,7 +24,10 @@ const Footer = () => {
                  <NavLink to="/">Home</NavLink>
                </li>
                <li>
-                 <NavLink to="/allBooks">allBooks</NavLink>
+                 <NavLink to="/all-items">All products</NavLink>
+               </li>
+               <li>
+                 <NavLink to="/dashboard">Dashboard</NavLink>
                </li>
                
                <li>
@@ -41,7 +44,7 @@ const Footer = () => {
       </div>
       {/* Contact Info */}
       
-      <div className="text-base-content text-[8px] md:text-[10px] lg:text-sm ">
+      <div className="text-base-content text-[8px]  md:text-[10px] lg:text-sm ">
                     <div className="flex items-center gap-4">
                   <FaPhoneAlt className="text-blue-600" />
                   <span>+880 1234 567 890</span>

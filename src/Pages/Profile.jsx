@@ -4,6 +4,7 @@ import { use } from "react";
 import { imageUpload } from "../api/utils"; // ✅ import image uploader
 import useRole from "../Hooks/useRole";
 import Loading from "./Loading";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const { user, updateUser } = use(AuthContext);
@@ -37,10 +38,12 @@ const Profile = () => {
         photoURL: photo,
       });
 
-      window.alert("Profile updated successfully!");
+      // window.alert("Profile updated successfully!");
+      toast.success('profile updated successfully')
       setEditing(false);
     } catch (error) {
-      window.alert("Update failed: " + error.message);
+      // window.alert("Update failed: " + error.message);
+      toast.error("Update failed: " + error.message);
     }
   };
   if(isRoleLoading) return <Loading/>

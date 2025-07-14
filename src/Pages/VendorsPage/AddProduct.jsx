@@ -79,7 +79,7 @@ const AddProduct = () => {
   },
   reviews: [],
 };
-    console.log(productData);
+    // console.log(productData);
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/products`, productData);
       if (res.data.insertedId || res.data.success) {

@@ -6,8 +6,23 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 const ProductCard = ({ product }) => {
+
+  const itemVariants = {
+  hidden: { y: 20, opacity: 0 }, // Start 20px below and invisible
+  visible: {
+    y: 0, // Animate to original position
+    opacity: 1, // Animate to fully visible
+    transition: {
+      type: "spring", // Use a spring animation for a bouncy feel
+      stiffness: 100,
+      damping: 10
+    }
+  },
+};
+
   const {
     itemName,
     marketName,
@@ -16,7 +31,9 @@ const ProductCard = ({ product }) => {
   } = product || {};
 
   return (
-    <Link className="w-full hover:scale-105 transition duration-300 ease-in-out " to={`/product/${product._id}`}>
+
+   <motion.div className='w-full' key={product._id} variants={itemVariants}>
+     <Link className="w-full hover:scale-105 transition duration-300 ease-in-out " to={`/product/${product._id}`}>
     <Card className="relative bg-base-content/10 overflow-hidden group  rounded-2xl shadow-md text-base-content hover:text-black">
       {/* Static Image */}
       <div className="h-60">
@@ -61,6 +78,7 @@ const ProductCard = ({ product }) => {
       </div>
     </Card>
     </Link>
+   </motion.div>
   );
 };
 

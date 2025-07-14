@@ -4,6 +4,9 @@ import ProductCard from '../Components/cards/ProductCard';
 import TopProduct from '../Components/TopProduct';
 import Advertisements from '../Components/Advertisements';
 import TestimonialCarousel from '../Components/TestimonialCarousel';
+import NewsletterSection from '../Components/NewslettersSection';
+import FAQSection from '../Components/FAQSection';
+import PhysicalShopsMap from '../Components/PhysicalShopsMap';
 
 const Home = () => {
     return (
@@ -13,6 +16,9 @@ const Home = () => {
            <Advertisements></Advertisements>
             <TopProduct></TopProduct>
             <TestimonialCarousel></TestimonialCarousel>
+            <NewsletterSection></NewsletterSection>
+            <FAQSection></FAQSection>
+            <PhysicalShopsMap></PhysicalShopsMap>
            {/* <ProductCard></ProductCard> */}
             </section>
 

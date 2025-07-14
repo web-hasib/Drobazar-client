@@ -24,6 +24,7 @@ import AdminRoute from "../Routes/AdminRoute";
 import RequestAdvertisement from "../Pages/VendorsPage/RequistAdvertisement";
 import MyAdvertisements from "../Pages/VendorsPage/MyAdvertisements";
 import AllAdvertisements from "../Pages/AdminsPage/AllAdvertisements";
+import About from "../Pages/About";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:'about',
+        Component:About
+      }
     ],
   },
   {

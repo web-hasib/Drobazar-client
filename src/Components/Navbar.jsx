@@ -11,6 +11,7 @@ import { AuthContext } from "../provider/AuthProvider";
 // import ThemeButton from "./shared/Buttons/ThemeButton";
 import AuthButton from "./shared/Buttons/AuthButton";
 import DayNightToggle from "./shared/Buttons/DayNightToggle";
+import { toast } from "react-toastify";
 
 {
   /* <img src="https://i.ibb.co/jvscyq8R/2-removebg-preview.png" alt="" /> */
@@ -25,11 +26,11 @@ const Navbar = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
-        alert("LogOut Successfully");
+        toast.success("LogOut Successfully");
       })
       .catch((error) => {
         // An error happened.
-        alert(error.message);
+        toast.error(error.message);
       });
   };
   const links = (

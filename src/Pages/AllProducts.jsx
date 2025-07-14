@@ -3,6 +3,7 @@ import axios from 'axios';
 import SIngleProductCard from '../Components/cards/SIngleProductCard';
 import Loading from './Loading';
 import Pagination from '../Components/shared/Pagination';
+import { Slide } from 'react-awesome-reveal';
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -49,6 +50,8 @@ const AllProducts = () => {
   };
 
   return (
+    <Slide>
+
     <div className="min-h-screen px-4 py-10 bg-base-100 text-base-content">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-lime-600 text-center">All Products</h1>
@@ -148,6 +151,7 @@ const AllProducts = () => {
         </div> */}
       </div>
     </div>
+    </Slide>
   );
 };
 
