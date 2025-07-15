@@ -59,7 +59,7 @@ visible: { opacity: 1, x: 0 },
 };
 
 return (
-<section className="py-16 px-4 max-w-7xl  mx-auto bg-base-100 text-base-content rounded-xl">
+<section className="py-16 px-4 max-w-7xl  mx-auto bg-base-100 text-base-content rounded-xl overflow-hidden">
 <h2 className="text-3xl font-bold text-center text-lime-400 mb-12">
 Frequently Asked Questions
 </h2>
