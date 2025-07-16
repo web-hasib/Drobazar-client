@@ -1,6 +1,9 @@
 
 # 🛒 Dorbazar Frontend (Assignment-12)
 
+## [Live link](https://dor-bazar.web.app/)
+## [server Ripo](https://github.com/Programming-Hero-Web-Course4/b11a12-server-side-web-hasib)
+
 Welcome to the **Dorbazar** Frontend — a full-featured e-commerce-like React application for product listing, real-time reviews, secure Stripe payments, user authentication, admin/vendor dashboards, and more.
 
 This is the frontend of the Dorbazar system, built with **React**, **Vite**, **Tailwind CSS**, and several modern libraries to deliver a seamless experience.
